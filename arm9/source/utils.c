@@ -158,7 +158,6 @@ void error(const char *fmt, ...)
     mcuPowerOff();
 }
 
-
 // CRC-16/MODBUS
 u16 crc16(const void *data, size_t size, u16 initialValue)
 {

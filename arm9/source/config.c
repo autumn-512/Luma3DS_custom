@@ -65,6 +65,7 @@ static const char *singleOptionIniNamesBoot[] = {
     "app_syscore_threads_on_core_2",
     "show_system_settings_string",
     "show_gba_boot_screen",
+    "skip_free_space_check",
 };
 
 static const char *singleOptionIniNamesMisc[] = {
@@ -665,7 +666,7 @@ static size_t saveLumaIniConfigToStr(char *out)
         (int)CONFIG_VERSIONMAJOR, (int)CONFIG_VERSIONMINOR,
         (int)CONFIG(AUTOBOOTEMU), (int)CONFIG(LOADEXTFIRMSANDMODULES),
         (int)CONFIG(PATCHGAMES), (int)CONFIG(REDIRECTAPPTHREADS),
-        (int)CONFIG(PATCHVERSTRING), (int)CONFIG(SHOWGBABOOT),
+        (int)CONFIG(PATCHVERSTRING), (int)CONFIG(SHOWGBABOOT), (int)CONFIG(PATCHFS),
 
         1 + (int)MULTICONFIG(DEFAULTEMU), 4 - (int)MULTICONFIG(BRIGHTNESS),
         splashPosStr, (unsigned int)cfg->splashDurationMsec,
@@ -848,6 +849,7 @@ void configMenu(bool oldPinStatus, u32 oldPinMode)
                                                "( ) Redirect app. syscore threads to core2",
                                                "( ) Show NAND or user string in System Settings",
                                                "( ) Show GBA boot screen in patched AGB_FIRM",
+                                               "( ) Skip free space check for fastboot",
 
                                                // Should always be the last 2 entries
                                                "\nBoot chainloader",
@@ -937,6 +939,10 @@ void configMenu(bool oldPinStatus, u32 oldPinMode)
                                                  "Enable showing the GBA boot screen\n"
                                                  "when booting GBA games.",
 
+                                                 "Enable skipping free SD card space\n"
+                                                 "calculation. Speeds up boot\n"
+                                                 "significantly, may be buggy.",
+
                                                 // Should always be the last 2 entries
                                                 "Boot to the Luma3DS chainloader menu.",
 
@@ -978,6 +984,7 @@ void configMenu(bool oldPinStatus, u32 oldPinMode)
         { .visible = true },
         { .visible = true },
         { .visible = ISN3DS },
+        { .visible = true },
         { .visible = true },
         { .visible = true },
         { .visible = true },
